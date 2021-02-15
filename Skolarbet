@@ -1,0 +1,107 @@
+from google.colab import auth
+auth.authenticate_user()
+ 
+import gspread
+import pandas as pd
+ 
+from oauth2client.client import GoogleCredentials
+ 
+#Åtkomst till google konto
+gc = gspread.authorize(GoogleCredentials.get_application_default())
+ 
+#Hämta specifikt google speadsheet
+wsheet = gc.open_by_key('1X0qw4UcANXgYd39nSEpO0RWIBBU4A6zOI7coq1No_VU')
+
+#Google spreadsheet blad(flik)
+rdsheet = wsheet.worksheet('Raw Data')
+ 
+# get_all_values gives a list of rows. / Läser in all data i bladet och skriver ut det
+rows = rdsheet.get_all_values()
+ 
+# Convert to a DataFrame and render.
+df = pd.DataFrame.from_records(rows)
+print(df)
+#importerar random funktionen
+import random as rnd
+
+#definierar en variabel som är kopplad till en "List" lista (listan ska vara elev namnen)
+elevLista = ["dataframe", "that", "emma", "had", "in", "her", "screenshot"]
+
+#alternativt kan vi skapa en annan List och använda den första som bas istället för att använda dataframen som bas
+
+#randomiserar alla namnen och printar sen ut de randomiserade namnen.
+rnd.shuffle(elevLista)
+print(elevLista)
+#Grey Skapaandet av knappar
+import ipywidgets as widgets
+from ipywidgets import Layout, Button, Box
+from IPython.display import display
+ 
+ 
+#knapp 1 ger möjlighet att välja klass att skapa saker med
+button = widgets.Button(
+   description='Välj klass',
+   disabled=False,
+   button_style ='info', #typ av knapp den blir blå
+   tooltip='Klicka') #gör så att när man drar pilen över visas ordet klicka
+output = widgets.Output()
+ 
+display(button, output)
+ 
+def on_button_clicked(b): #vad knappen gör
+   with output:
+       print("Klass vald")
+ 
+button.on_click(on_button_clicked)
+
+ 
+#knapp 2 ska slumpa sittplatser och måste va kopplad till en randomizer
+#problemet vi måste lösa med att låsa platser
+button = widgets.Button(
+   description='Slumpa sittplatser',
+   disabled=False,
+   button_style ='info',
+   tooltip='Klicka')
+output = widgets.Output()
+ 
+display(button, output)
+ 
+def on_button_clicked(b):
+   with output:
+       print("Sittplatser slumpas.")
+ 
+button.on_click(on_button_clicked)
+ 
+#knapp 3 ska slumpa basgrupperna och måste kopplas samman med en randomizer
+button = widgets.Button(description='Slumpa basgrupper',
+   disabled=False,
+   button_style ='info',
+   tooltip='Klicka')
+output = widgets.Output()
+ 
+display(button, output)
+ 
+def on_button_clicked(b):
+   with output:
+       print("Basgrupper slumpas.")
+ 
+button.on_click(on_button_clicked)
+ 
+ 
+#knapp 4 ska avsluta programet
+button = widgets.Button(
+   description='Avsluta',
+   disabled=False,
+   button_style ='danger',
+   tooltip='Klicka')
+ 
+out = widgets.Output()
+def on_buttonclicked():
+     # "linking function with output"
+     with out:
+     # what happens when we press the button
+      print('Something happens!')
+# linking button and function together using a button's method
+button.on_click(on_button_clicked)
+# displaying button and its output together
+widgets.VBox([button,out])
